@@ -97,7 +97,12 @@ Assert this method was called one time. This is syntatic sugar, equivilent to
 
 sub once {
     my $self = shift;
-    ok(scalar(@{ $self->{__calls} }) == 1, "$self->{method} should have been called once, but was called ".scalar(@{ $self->{__calls} })." times.");
+
+    if (scalar @{$self->{__calls}} == 1) {
+        pass("$self->{method} was called once, as expected");
+    } else {
+        fail("$self->{method} should have been called once, but was called ".scalar(@{ $self->{__calls} })." times.");
+    }
     return $self;
 }
 
